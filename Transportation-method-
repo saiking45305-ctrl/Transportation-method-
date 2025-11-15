@@ -1,0 +1,33 @@
+                                       // Transportation-method-
+    #include <stdio.h>
+		#include<math.h>
+
+void transportationMethod(int supply[], int demand[], int cost[][3], int m, int n) {
+    int i = 0, j = 0;
+    int allocated[3][3] = {0};  // Allocation matrix
+
+    while (i < m && j < n) {
+        int allocation = (supply[i] < demand[j]) ? supply[i] : demand[j];
+        allocated[i][j] = allocation;
+        supply[i] -= allocation;
+        demand[j] -= allocation;
+        
+        printf("Allocate %d units from source %d to destination %d with cost %d\n",
+               allocation, i + 1, j + 1, allocation * cost[i][j]);
+        
+        if (supply[i] == 0) i++;
+        if (demand[j] == 0) j++;
+    }
+}
+
+int main() {
+    int supply[] = {20, 30, 25};
+    int demand[] = {10, 25, 40};
+    int cost[3][3] = {
+        {8, 6, 10},
+        {9, 7, 4},
+        {3, 4, 2}
+    };
+transportationMethod(supply, demand, cost, 3, 3);
+    return 0;
+}
